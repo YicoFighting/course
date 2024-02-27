@@ -10,6 +10,7 @@ import {
   firstWeekStartDate,
   lastWeekEndDate,
   curriculumTimes,
+  getDatesForWeekNumber,
 } from "./utils";
 import { showNotify } from "vant";
 import "vant/es/notify/style";
@@ -43,13 +44,17 @@ const showImg = ref(false);
 const uploadUrl = ref(null);
 
 // 周的切换
-const onConfirm = ({ selectedOptions }) => {
+const onConfirm = async ({ selectedOptions }) => {
   result.value = selectedOptions[0]?.value;
   showPicker.value = false;
 
   emptyArray.value = new Array(8).fill().map(() => new Array(7));
   // 修改课程数据
   modifyCourseData(curriculums, emptyArray, result.value);
+
+  // 展示日期
+  const dateArray = getDatesForWeekNumber(result.value);
+  weekInfo.value = ["", ...dateArray];
 };
 
 // 日历(确认)

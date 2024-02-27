@@ -3,6 +3,31 @@ let firstWeekStartDate = new Date(2024, 1, 26);
 let lastWeekEndDate = new Date(2024, 6, 7);
 
 /**
+ * 根据周数获取该周的七个日期
+ * @param {number} weekNumber - 周数
+ * @returns {Array} - 该周的七个日期，格式为"MM-DD"
+ */
+const getDatesForWeekNumber = (weekNumber) => {
+  // 计算对应周的起始日期
+  let startDate = new Date(firstWeekStartDate);
+  startDate.setDate(startDate.getDate() + (weekNumber - 1) * 7);
+
+  // 创建包含七天日期的数组
+  let dateArray = [];
+  for (let i = 0; i < 7; i++) {
+    let tempDate = new Date(startDate);
+    tempDate.setDate(tempDate.getDate() + i);
+    let formattedDate = `${String(tempDate.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(tempDate.getDate()).padStart(2, "0")}`;
+    dateArray.push(formattedDate);
+  }
+
+  return dateArray;
+};
+
+/**
  * 获取当前日期对应周 及 对应周的7个日期
  * @param {*} year 年
  * @param {*} month 月
@@ -144,4 +169,5 @@ export {
   obtainTheTotalNumberOfWeeks,
   modifyCourseData,
   getCurrentDateTime,
+  getDatesForWeekNumber,
 };
