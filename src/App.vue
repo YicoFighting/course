@@ -7,7 +7,12 @@ import {
   obtainTheTotalNumberOfWeeks,
   modifyCourseData,
   getCurrentDateTime,
+  firstWeekStartDate,
+  lastWeekEndDate,
+  curriculumTimes,
 } from "./utils";
+import { showNotify } from "vant";
+import "vant/es/notify/style";
 
 // 用于展示的七个日期
 const weekInfo = ref(new Array(8).fill());
@@ -24,6 +29,18 @@ const result = ref(1);
 const showPicker = ref(false);
 // 选择器数据
 const columns = ref([]);
+// 显示日历
+const showCalendar = ref(false);
+// 展示弹框
+const show = ref(false);
+// 弹框内容
+const dialogInfo = ref({});
+// 背景图片
+const backImage = ref(null);
+// 修改背景图片弹框
+const showImg = ref(false);
+// 待设置的图片 url
+const uploadUrl = ref(null);
 
 // 周的切换
 const onConfirm = ({ selectedOptions }) => {
@@ -33,6 +50,68 @@ const onConfirm = ({ selectedOptions }) => {
   emptyArray.value = new Array(8).fill().map(() => new Array(7));
   // 修改课程数据
   modifyCourseData(curriculums, emptyArray, result.value);
+};
+
+// 日历(确认)
+const onCalendarConfirm = async (date) => {
+  // 检查选择的日期是否在教学周之间
+  if (date >= firstWeekStartDate && date <= lastWeekEndDate) {
+    showCalendar.value = false;
+    const { weekNumber, dateArray } = await getCurrentDate(date);
+    // 修改课程数据
+    modifyCourseData(curriculums, emptyArray, weekNumber);
+
+    // 展示日期
+    weekInfo.value = ["", ...dateArray];
+
+    result.value = weekNumber;
+  } else {
+    // 如果不在范围内，则弹出警告通知
+    showNotify({
+      type: "warning",
+      message: "选择的日期不在教学周",
+      className: ["h-10", "flex", "justify-center", "items-center"],
+      color: "#fff",
+      background: "rgb(239 68 68)",
+    });
+  }
+};
+
+// 点击课程
+const clickCouse = (info) => {
+  if (info) {
+    show.value = true;
+    dialogInfo.value = info;
+    dialogInfo.value.time = ["未知"];
+
+    const regex = /教(\d+)/;
+    const match = info.classroom.match(regex);
+
+    if (match) {
+      const times = match[1] % 2 === 0 ? "double" : "single";
+      const index = info.arrayIndex[1];
+      dialogInfo.value.time = [
+        curriculumTimes[times][index],
+        curriculumTimes[times][index + 1],
+      ];
+    }
+  }
+};
+
+// 取消 与 确认背景图片
+const imgCancel = () => {
+  uploadUrl.value = null;
+};
+const imgConfirm = () => {
+  if (uploadUrl.value) {
+    localStorage.setItem("bg-image", uploadUrl.value);
+    backImage.value = uploadUrl.value;
+    uploadUrl.value = null;
+  } else {
+    localStorage.removeItem("bg-image");
+    backImage.value = null;
+    uploadUrl.value = null;
+  }
 };
 
 onMounted(async () => {
@@ -57,22 +136,34 @@ onMounted(async () => {
   setInterval(() => {
     currentDay.value = getCurrentDateTime();
   }, 1000);
+
+  // localStorage.setItem(
+  //   "bg-image",
+  //   "https://dogefs.s3.ladydaily.com/~/source/wallhaven/full/gp/wallhaven-gp17xe.jpg?w=2560&h=1440&fmt=webp"
+  // );
+
+  backImage.value = localStorage.getItem("bg-image");
 });
 </script>
 
 <template>
-  <div class="home w-full h-full flex flex-col text-xs bg-stone-200 pt-2.5">
+  <div
+    class="home w-full h-full flex flex-col text-xs pt-2.5 relative z-10"
+    :class="backImage ? 'bg-no-repeat bg-cover' : 'bg-stone-200'"
+  >
     <div class="flex px-2.5">
       <div class="select-col">
         <span> 当前为： </span>
-        <span class="text-blue-400" @click="showPicker = true">
+        <span class="text-blue-400 cursor-pointer" @click="showPicker = true">
           第{{ numberMap[result] }}周
         </span>
       </div>
 
-      <div class="flex-1 text-center">课程表</div>
+      <div class="flex-1 text-center cursor-pointer" @click="showImg = true">
+        课程表
+      </div>
 
-      <div class="select-col">
+      <div class="select-col cursor-pointer" @click="showCalendar = true">
         {{ currentDay }}
       </div>
 
@@ -83,6 +174,8 @@ onMounted(async () => {
           @cancel="showPicker = false"
         />
       </van-popup>
+
+      <van-calendar v-model:show="showCalendar" @confirm="onCalendarConfirm" />
     </div>
 
     <div class="flex-1 flex flex-col">
@@ -103,7 +196,10 @@ onMounted(async () => {
           </div>
         </div>
         <div class="right">
-          <table class="w-full h-full bg-white border-collapse">
+          <table
+            class="w-full h-full border-collapse"
+            :class="backImage ? '' : 'bg-white'"
+          >
             <tr
               class="row"
               v-for="(row, index) in emptyArray"
@@ -114,9 +210,10 @@ onMounted(async () => {
                   v-if="!col?.del"
                   :rowspan="col?.rowspan ?? 1"
                   :class="[
-                    'text-center w-12 h-12 border border-gray-200',
-                    col?.title ? 'text-white bg-sky-600' : '',
+                    'text-center w-12 h-12 border border-gray-200 cursor-pointer',
+                    col?.title ? 'text-white bg-sky-600 hover:bg-blue-400' : '',
                   ]"
+                  @click="clickCouse(col)"
                 >
                   <template v-if="col?.title">
                     {{ col?.title }}({{ col?.classroom }})
@@ -128,7 +225,89 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+
+    <van-dialog
+      v-model:show="show"
+      :title="dialogInfo.title"
+      theme="round-button"
+      confirm-button-text="知道了"
+    >
+      <div class="flex flex-col text-sm p-4 text-gray-400">
+        <div class="flex">
+          <div class="w-20 text-right">教室：</div>
+          <span class="text-black">{{ dialogInfo.classroom }}</span>
+        </div>
+        <div class="flex">
+          <div class="w-20 text-right">课程编号：</div>
+          <span class="text-black">{{ dialogInfo.class }}</span>
+        </div>
+        <div class="flex">
+          <div class="w-20 text-right">班级：</div>
+          <div class="flex-1 flex flex-col text-black">
+            <div
+              v-for="classstr in dialogInfo.classString.split(' ')"
+              :key="classstr"
+            >
+              {{ classstr }}
+            </div>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="w-20 text-right">起止周：</div>
+          <span class="text-black">
+            {{ dialogInfo.startWeek }} - {{ dialogInfo.endWeek }}
+          </span>
+        </div>
+        <div class="flex">
+          <div class="w-20 text-right">上课时间：</div>
+          <span class="text-black">{{ dialogInfo.time.join(" ") }}</span>
+        </div>
+        <div class="flex">
+          <div class="w-20 text-right">上课人数：</div>
+          <a
+            class="text-blue-400"
+            target="_blank"
+            :href="'/excel/' + dialogInfo.class + '.xls'"
+          >
+            {{ dialogInfo.peopleNums }}
+          </a>
+        </div>
+        <div class="flex">
+          <div class="w-20 text-right">周课时：</div>
+          <span class="text-black">{{ dialogInfo.weeklyClassHours }}</span>
+        </div>
+        <div class="flex">
+          <div class="w-20 text-right">学分：</div>
+          <span class="text-black">{{ dialogInfo.credit }}</span>
+        </div>
+        <div class="flex">
+          <div class="w-20 text-right">总课时：</div>
+          <span class="text-black">{{ dialogInfo.totalClassHours }}</span>
+        </div>
+      </div>
+    </van-dialog>
+
+    <van-dialog
+      v-model:show="showImg"
+      title="修改背景图片"
+      show-cancel-button
+      @cancel="imgCancel"
+      @confirm="imgConfirm"
+      :confirmButtonText="uploadUrl ? '确认' : '重置'"
+    >
+      <van-cell-group inset>
+        <van-field v-model="uploadUrl" label="" placeholder="请输入图片地址" />
+      </van-cell-group>
+
+      <img v-if="uploadUrl" :src="uploadUrl" class="w-full p-3" />
+    </van-dialog>
   </div>
+
+  <div
+    class="absolute w-full h-full inset-0 z-0"
+    :class="backImage ? 'bg-no-repeat bg-cover blur-sm backdrop-blur-sm' : ''"
+    :style="backImage ? { backgroundImage: `url(${backImage})` } : {}"
+  ></div>
 </template>
 
 <style scoped>

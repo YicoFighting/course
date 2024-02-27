@@ -9,6 +9,10 @@ const curriculums = [
     classroom: "长芗苑教10栋305",
     arrayIndex: [1, 0],
     rowspan: 2,
+    peopleNums: 95,
+    weeklyClassHours: 0.5,
+    credit: 0.5,
+    totalClassHours: 8,
   },
   {
     title: "形势与政策(四)",
@@ -19,6 +23,10 @@ const curriculums = [
     classroom: "长芗苑教10栋305",
     arrayIndex: [1, 0],
     rowspan: 2,
+    peopleNums: 90,
+    weeklyClassHours: 0.5,
+    credit: 0.5,
+    totalClassHours: 8,
   },
   {
     title: "形势与政策(四)",
@@ -29,6 +37,10 @@ const curriculums = [
     classroom: "长芗苑教13栋201",
     arrayIndex: [1, 0],
     rowspan: 2,
+    peopleNums: 98,
+    weeklyClassHours: 0.5,
+    credit: 0.5,
+    totalClassHours: 8,
   },
   //================================//
   {
@@ -40,6 +52,10 @@ const curriculums = [
     classroom: "长芗苑教13栋405",
     arrayIndex: [1, 2],
     rowspan: 2,
+    peopleNums: 95,
+    weeklyClassHours: 2.5,
+    credit: 3,
+    totalClassHours: 48,
   },
   {
     title: "思想道德与法治",
@@ -47,9 +63,13 @@ const curriculums = [
     classString: "23工技V1班 23建装V1班 23建工V1班",
     startWeek: 12,
     endWeek: 13,
-    classroom: "实践考察",
+    classroom: "长芗苑教13栋405-实践考察",
     arrayIndex: [1, 2],
     rowspan: 2,
+    peopleNums: 95,
+    weeklyClassHours: 2.5,
+    credit: 3,
+    totalClassHours: 48,
   },
   //================================//
   {
@@ -61,6 +81,10 @@ const curriculums = [
     classroom: "长芗苑教13栋201",
     arrayIndex: [1, 4],
     rowspan: 2,
+    peopleNums: 92,
+    weeklyClassHours: 0.5,
+    credit: 0.5,
+    totalClassHours: 8,
   },
   //================================//
   {
@@ -72,6 +96,10 @@ const curriculums = [
     classroom: "长芗苑教13栋305",
     arrayIndex: [1, 6],
     rowspan: 2,
+    peopleNums: 96,
+    weeklyClassHours: 0.5,
+    credit: 0.5,
+    totalClassHours: 8,
   },
   {
     title: "形势与政策(四)",
@@ -82,6 +110,10 @@ const curriculums = [
     classroom: "长芗苑教10栋301",
     arrayIndex: [1, 6],
     rowspan: 2,
+    peopleNums: 95,
+    weeklyClassHours: 0.5,
+    credit: 0.5,
+    totalClassHours: 8,
   },
   //================================//
   {
@@ -93,6 +125,10 @@ const curriculums = [
     classroom: "长芗苑教13栋302",
     arrayIndex: [2, 0],
     rowspan: 2,
+    peopleNums: 95,
+    weeklyClassHours: 2.5,
+    credit: 3,
+    totalClassHours: 48,
   },
   {
     title: "思想道德与法治",
@@ -100,9 +136,13 @@ const curriculums = [
     classString: "23工技V1班 23建装V1班 23建工V1班",
     startWeek: 12,
     endWeek: 13,
-    classroom: "实践考察",
+    classroom: "长芗苑教13栋302-实践考察",
     arrayIndex: [2, 0],
     rowspan: 2,
+    peopleNums: 95,
+    weeklyClassHours: 2.5,
+    credit: 3,
+    totalClassHours: 48,
   },
   //================================//
   {
@@ -114,6 +154,10 @@ const curriculums = [
     classroom: "长芗苑教10栋303",
     arrayIndex: [2, 2],
     rowspan: 2,
+    peopleNums: 80,
+    weeklyClassHours: 2.5,
+    credit: 3,
+    totalClassHours: 48,
   },
   {
     title: "思想道德与法治",
@@ -121,9 +165,13 @@ const curriculums = [
     classString: "23法务V1班 23应用日语V1班 23商务英语V1班",
     startWeek: 13,
     endWeek: 14,
-    classroom: "实践考察",
+    classroom: "长芗苑教10栋303-实践考察",
     arrayIndex: [2, 2],
     rowspan: 2,
+    peopleNums: 80,
+    weeklyClassHours: 2.5,
+    credit: 3,
+    totalClassHours: 48,
   },
   {
     title: "思想道德与法治",
@@ -131,9 +179,13 @@ const curriculums = [
     classString: "23法务V1班 23应用日语V1班 23商务英语V1班",
     startWeek: 16,
     endWeek: 16,
-    classroom: "实践考察",
+    classroom: "长芗苑教10栋303-实践考察",
     arrayIndex: [2, 2],
     rowspan: 2,
+    peopleNums: 80,
+    weeklyClassHours: 2.5,
+    credit: 3,
+    totalClassHours: 48,
   },
   //================================//
   {
@@ -145,6 +197,10 @@ const curriculums = [
     classroom: "长芗苑教10栋304",
     arrayIndex: [2, 4],
     rowspan: 2,
+    peopleNums: 88,
+    weeklyClassHours: 0.5,
+    credit: 0.5,
+    totalClassHours: 8,
   },
   //================================//
   {
@@ -156,6 +212,10 @@ const curriculums = [
     classroom: "长芗苑教10栋306",
     arrayIndex: [2, 6],
     rowspan: 2,
+    peopleNums: 99,
+    weeklyClassHours: 0.5,
+    credit: 0.5,
+    totalClassHours: 8,
   },
   //================================//
   {
@@ -167,6 +227,10 @@ const curriculums = [
     classroom: "长芗苑教11栋103",
     arrayIndex: [4, 0],
     rowspan: 2,
+    peopleNums: 80,
+    weeklyClassHours: 2.5,
+    credit: 3,
+    totalClassHours: 48,
   },
   {
     title: "思想道德与法治",
@@ -174,12 +238,39 @@ const curriculums = [
     classString: "23法务V1班 23应用日语V1班 23商务英语V1班",
     startWeek: 12,
     endWeek: 12,
-    classroom: "实践考察",
+    classroom: "长芗苑教11栋103-实践考察",
     arrayIndex: [4, 0],
     rowspan: 2,
+    peopleNums: 80,
+    weeklyClassHours: 2.5,
+    credit: 3,
+    totalClassHours: 48,
   },
   //================================//
 ];
+
+const curriculumTimes = {
+  single: [
+    "08:00-08:45",
+    "08:55-09:40",
+    "10:25-11:10",
+    "11:20-12:05",
+    "14:00-14:45",
+    "14:55-15:40",
+    "16:25-17:10",
+    "17:20-18:05",
+  ],
+  double: [
+    "08:20-09:05",
+    "09:15-10:00",
+    "10:35-11:20",
+    "11:30-12:15",
+    "14:20-15:05",
+    "15:15-16:00",
+    "16:35-17:20",
+    "17:30-18:15",
+  ],
+};
 
 // 创建数字到汉字的映射对象
 const numberMap = {
@@ -215,4 +306,4 @@ for (let i = 9; i <= 40; i++) {
   }
 }
 
-export { curriculums, numberMap };
+export { curriculums, numberMap, curriculumTimes };

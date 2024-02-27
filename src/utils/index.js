@@ -1,5 +1,7 @@
-export { curriculums, numberMap } from "./constant";
+export { curriculums, numberMap, curriculumTimes } from "./constant";
 export {
+  firstWeekStartDate,
+  lastWeekEndDate,
   getCurrentDate,
   obtainTheTotalNumberOfWeeks,
   modifyCourseData,

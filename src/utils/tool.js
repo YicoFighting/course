@@ -1,5 +1,6 @@
 // 将第一周的起始日期设置为2024年2月26日
 let firstWeekStartDate = new Date(2024, 1, 26);
+let lastWeekEndDate = new Date(2024, 6, 7);
 
 /**
  * 获取当前日期对应周 及 对应周的7个日期
@@ -93,7 +94,7 @@ const getTotalWeeks = (year, month, day) => {
  * @param {*} lastDay
  * @returns
  */
-const obtainTheTotalNumberOfWeeks = (lastDay = new Date(2024, 6, 7)) => {
+const obtainTheTotalNumberOfWeeks = (lastDay = lastWeekEndDate) => {
   const { year, month, day } = obtainYear(lastDay);
   const totalWeeks = getTotalWeeks(year, month, day);
   return totalWeeks;
@@ -137,6 +138,8 @@ const getCurrentDateTime = () => {
 };
 
 export {
+  firstWeekStartDate,
+  lastWeekEndDate,
   getCurrentDate,
   obtainTheTotalNumberOfWeeks,
   modifyCourseData,
