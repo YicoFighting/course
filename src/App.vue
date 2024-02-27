@@ -62,6 +62,8 @@ const onCalendarConfirm = async (date) => {
   // 检查选择的日期是否在教学周之间
   if (date >= firstWeekStartDate && date <= lastWeekEndDate) {
     showCalendar.value = false;
+    emptyArray.value = new Array(8).fill().map(() => new Array(7));
+
     const { weekNumber, dateArray } = await getCurrentDate(date);
     // 修改课程数据
     modifyCourseData(curriculums, emptyArray, weekNumber);
